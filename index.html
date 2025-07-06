@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圏論による統一場心理学とプロセス心理学の比較分析</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-container {
+            width: 297mm;
+            height: 210mm;
+            max-width: 95vw;
+            max-height: 90vh;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-header {
+            background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 15px 30px;
+            margin: -40px -40px 30px -40px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .slide-title {
+            background: linear-gradient(90deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 20px 30px;
+            margin: -40px -40px 40px -40px;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 24px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .math {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #45a049;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-title">圏論による統一場心理学とプロセス心理学の比較分析</div>
+            <div class="center-content">
+                <h1 style="color: #2196F3; margin-bottom: 30px;">Category Theory Approach to Comparative Analysis</h1>
+                <h2 style="border: none; color: #666;">統一場心理学（UFP）とプロセス志向心理学（POP）の構造的関係性の探究</h2>
+                <div style="margin-top: 40px; font-size: 18px; color: #555;">
+                    <p>数学的圏論を用いた心理学理論の統合的理解</p>
+                    <p>変容プロセスの普遍構造の解明</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Background and Objectives -->
+        <div class="slide">
+            <div class="slide-header">研究の背景と目的</div>
+            <div class="slide-content">
+                <h2>研究背景</h2>
+                <ul>
+                    <li>統一場心理学とプロセス志向心理学は、異なる視座から「心的変容」を扱う</li>
+                    <li>両理論の構造的関係性や翻訳可能性が不明確</li>
+                    <li>圏論による形式化により、理論間の対応関係を明確化できる可能性</li>
+                </ul>
+
+                <h2>研究目的</h2>
+                <ul>
+                    <li>各理論を数学的圏（Category）として定式化</li>
+                    <li>構造的相違点と変換可能性の両方を可視化</li>
+                    <li>新たな統合的視点（メタ理論）の可能性を探る</li>
+                    <li>心的変容プロセスの普遍構造を記述</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>アプローチ：</strong>圏論の関手（Functor）と自然変換（Natural Transformation）を用いて、理論間の翻訳関係を構築
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: UFP Category -->
+        <div class="slide">
+            <div class="slide-header">統一場心理学圏（UFP）の定式化</div>
+            <div class="slide-content">
+                <h2>対象（Objects）</h2>
+                <div class="math">
+                    心的状態 = 5次元ベクトル (S, Q, E, R, Z)
+                    <br>S: 空間軸（関係の広がり）
+                    <br>Q: 質感軸（論理・時間）
+                    <br>E: 情感軸（意味・情緒）
+                    <br>R: 実在軸（今ここでの身体実感）
+                    <br>Z: 象徴軸（観在・時象）
+                </div>
+
+                <h2>射（Morphisms）</h2>
+                <ul>
+                    <li>主観的選択に基づく意識変容プロセス：選択 → 決断 → 実行</li>
+                    <li>各射は体験構造の次元を1つ以上変化させる関数</li>
+                    <li>射の合成：複数の意識変容プロセスの連結</li>
+                </ul>
+
+                <h2>その他の構造</h2>
+                <ul>
+                    <li><strong>恒等射：</strong>体験構造を保持する静的な自己観察状態</li>
+                    <li><strong>関手の例：</strong>多様な場面（家族、職場など）での主観構造の写像</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: POP Category -->
+        <div class="slide">
+            <div class="slide-header">プロセス心理学圏（POP）の定式化</div>
+            <div class="slide-content">
+                <h2>対象（Objects）</h2>
+                <div class="math">
+                    状態フィールド = {一次プロセス, 二次プロセス, ドリームボディ, エッジ, ロール}
+                    <br>各対象は関係場における心理的ポジションを示す
+                </div>
+
+                <h2>射（Morphisms）</h2>
+                <ul>
+                    <li>プロセス変化の流れ：一次→エッジ→二次（変容）</li>
+                    <li>シグナルの増幅、ロールチェンジ、エッジ越えなどが射として表現</li>
+                    <li>合成：複数のプロセス的段階の重ね合わせ</li>
+                </ul>
+
+                <h2>その他の構造</h2>
+                <ul>
+                    <li><strong>恒等射：</strong>プロセスを凍結し、現状維持する状態（防衛、回避）</li>
+                    <li><strong>関手の例：</strong>個人プロセス → グループプロセスへの写像</li>
+                </ul>
+
+                <div class="diagram">
+                    一次プロセス ——→ エッジ ——→ 二次プロセス<br>
+                    （顕在意識）     （境界）    （潜在的変容）
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Comparison Table -->
+        <div class="slide">
+            <div class="slide-header">UFP圏とPOP圏の比較分析</div>
+            <div class="slide-content">
+                <table class="comparison-table">
+                    <tr>
+                        <th>比較観点</th>
+                        <th>統一場心理学圏（UFP）</th>
+                        <th>プロセス心理学圏（POP）</th>
+                    </tr>
+                    <tr>
+                        <td><strong>対象の定義</strong></td>
+                        <td>5次元体験構造</td>
+                        <td>状態場におけるプロセスポジション</td>
+                    </tr>
+                    <tr>
+                        <td><strong>射の定義</strong></td>
+                        <td>主観選択による構造変容</td>
+                        <td>プロセス的流れによる変容</td>
+                    </tr>
+                    <tr>
+                        <td><strong>射の性質</strong></td>
+                        <td>意識の統合・能動観強化</td>
+                        <td>無意識の現れとエッジ超え</td>
+                    </tr>
+                    <tr>
+                        <td><strong>合成の意味</strong></td>
+                        <td>主観変容プロセスの段階的構成</td>
+                        <td>複数プロセスの流れの組合せ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>恒等射の意味</strong></td>
+                        <td>自己観察状態</td>
+                        <td>現状維持・回避の固定状態</td>
+                    </tr>
+                    <tr>
+                        <td><strong>関手の応用</strong></td>
+                        <td>各状況下での主観構造の変換</td>
+                        <td>個人→集団プロセスの移行</td>
+                    </tr>
+                </table>
+
+                <div class="highlight">
+                    <strong>共通構造：</strong>「状態→変容→統合」という変容プロセスの基本パターンを両理論が共有
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Functor Construction -->
+        <div class="slide">
+            <div class="slide-header">関手F: UFP→POPの構築</div>
+            <div class="slide-content">
+                <h2>「エッジ」と「活性化エネルギー」の対応</h2>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>対象写像</h3>
+                        <ul>
+                            <li><strong>Z軸閉鎖状態</strong> → 一次プロセス</li>
+                            <li><strong>Z軸揺らぎ状態</strong> → エッジ</li>
+                            <li><strong>Z軸開放状態</strong> → ドリームボディ</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>射写像</h3>
+                        <ul>
+                            <li><strong>自己観察</strong> → 恒等射（現状維持）</li>
+                            <li><strong>意識変容準備</strong> → シグナル増幅</li>
+                            <li><strong>Z軸統合変化</strong> → エッジ超え</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="diagram">
+                    F: UFP → POP<br><br>
+                    (S,Q,E,R,Z_揺らぎ) ——F——→ エッジ状態<br>
+                    ↓ f (選択→決断→実行)     ↓ F(f) (エッジ超え)<br>
+                    (S',Q',E',R',Z_統合) ——F——→ ドリームボディ
+                </div>
+
+                <p><strong>重要な洞察：</strong>Z軸（象徴軸）の変容プロセスが、POPにおけるエッジ超えの本質的構造と対応している</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Energy Model -->
+        <div class="slide">
+            <div class="slide-header">エネルギー的モデル化</div>
+            <div class="slide-content">
+                <h2>活性化エネルギーの定式化</h2>
+                <div class="math">
+                    射 f: x → x' に対して、エネルギー条件 E_activation(f) を定義
+                    <br><br>
+                    E_activation(f) = d_Z(x,x') + α·Resistance(x)
+                    <br><br>
+                    d_Z(x,x'): Z軸における変化量（象徴変容の程度）
+                    <br>Resistance(x): 出発点の心的抵抗度
+                    <br>α: 重み定数
+                </div>
+
+                <h2>変容実行の条件</h2>
+                <div class="math">
+                    変容が生じる条件: E_inner > E_activation(f)
+                    <br><br>
+                    E_inner: 本人の内的動機・志・潜在的エネルギー
+                </div>
+
+                <div class="two-column">
+                    <div>
+                        <h3>UFP的解釈</h3>
+                        <ul>
+                            <li>弱い思い込み → 低い活性化エネルギー</li>
+                            <li>強い思い込み → 高い活性化エネルギー</li>
+                            <li>主観的選択の質が変容を決定</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>POP的解釈</h3>
+                        <ul>
+                            <li>エッジの強度 → 抵抗の程度</li>
+                            <li>ドリームボディの力 → 内的エネルギー</li>
+                            <li>シグナル増幅が突破を促進</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Meta Category -->
+        <div class="slide">
+            <div class="slide-header">心理的エネルギー圏（PsyE）：メタ圏の創出</div>
+            <div class="slide-content">
+                <h2>統合的構造の定義</h2>
+                <div class="math">
+                    心的状態: x = (S,Q,E,R,Z; P)
+                    <br>P: POPでの心理ポジション
+                    <br><br>
+                    変容射: f = ⟨ΔZ, Edge, E_activation⟩
+                    <br>ΔZ: 象徴軸変化量, Edge: 越えるべき境界, E_activation: 必要エネルギー
+                </div>
+
+                <div class="two-column">
+                    <div>
+                        <h3>部分圏関係</h3>
+                        <ul>
+                            <li>PsyE_Z ⊂ PsyE（UFP部分圏）</li>
+                            <li>PsyE_P ⊂ PsyE（POP部分圏）</li>
+                            <li>双方向翻訳の自然変換を内包</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>応用可能性</h3>
+                        <ul>
+                            <li>他理論（U理論、唯識）の統合</li>
+                            <li>変容プロセスの難易度予測</li>
+                            <li>臨床心理学への応用</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="diagram">
+                    UFP圏 ⟷ 翻訳関手 ⟷ POP圏<br>
+                    ↘        ↓        ↙<br>
+                    心理的エネルギー圏（PsyE）<br>
+                    （変容プロセスの統一理論）
+                </div>
+
+                <div class="highlight">
+                    <strong>意義：</strong>異なる心理理論を構造的に統合し、変容メカニズムの普遍的記述を可能にする
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Natural Transformation -->
+        <div class="slide">
+            <div class="slide-header">自然変換と翻訳ネットワーク</div>
+            <div class="slide-content">
+                <h2>自然変換の具体例</h2>
+
+                <div class="two-column">
+                    <div>
+                        <h3>自己観察状態の翻訳</h3>
+                        <div class="math">
+                            η_x: F(x) = 凍結状態<br>
+                            → G(x) = 内省的観察状態
+                        </div>
+                        <p>観察によって凍結に気づき、エネルギー化する成長の萌芽</p>
+                    </div>
+                    <div>
+                        <h3>成長点状態の翻訳</h3>
+                        <div class="math">
+                            θ_x: F(x) = エッジ状態<br>
+                            → G(x) = 象徴の変容開始
+                        </div>
+                        <p>変容の前駆状態における構造的対応関係</p>
+                    </div>
+                </div>
+
+                <h2>圏間翻訳ネットワーク</h2>
+                <div class="diagram">
+                    心的状態 S<br>
+                    ↙     ↓     ↘<br>
+                    UFP圏  POP圏  U理論圏<br>
+                    (Z軸)  (エッジ) (プレゼンシング)<br><br>
+                    φ₁, φ₂, φ₃: 翻訳関数（部分的関手）
+                </div>
+
+                <p><strong>可換性の保証：</strong>どの経路で翻訳しても同一の心的現象を一貫して記述可能</p>
+
+                <div class="highlight">
+                    <strong>実用的意義：</strong>クライアントの状態を複数の理論的枠組みで同時に理解し、最適な介入方法を選択可能
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Future Prospects -->
+        <div class="slide">
+            <div class="slide-header">今後の展望と結論</div>
+            <div class="slide-content">
+                <h2>達成された成果</h2>
+                <ul>
+                    <li>UFPとPOPの圏論的定式化による構造比較</li>
+                    <li>関手による理論間翻訳メカニズムの構築</li>
+                    <li>エネルギー的観点からの変容モデル統合</li>
+                    <li>自然変換による多理論対応の実現</li>
+                </ul>
+
+                <h2>今後の研究方向</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>理論的拡張</h3>
+                        <ul>
+                            <li>U理論、唯識、認知行動療法との統合</li>
+                            <li>発達心理学的視点の導入</li>
+                            <li>集団・組織レベルへの応用</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>実践的応用</h3>
+                        <ul>
+                            <li>臨床心理学での診断・治療指針</li>
+                            <li>教育・研修プログラムの設計</li>
+                            <li>AI支援による変容プロセス分析</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>結論</h2>
+                <div class="highlight">
+                    <p><strong>圏論的アプローチにより、異なる心理学理論の構造的関係性と変換可能性を明確化。</strong></p>
+                    <p>心的変容プロセスの普遍的記述と、理論統合による新たな理解枠組みの創出が可能となった。</p>
+                </div>
+
+                <div class="math">
+                    変容の普遍構造 = 「状態 → 抵抗/障壁 → 突破 → 統合」<br>
+                    各理論は、この構造の異なる側面を記述している
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">前へ</button>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">次へ</button>
+        </div>
+
+        <!-- Slide number -->
+        <div class="slide-number">
+            <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlideIndex + direction;
+            if (newIndex >= 0 && newIndex < totalSlides) {
+                currentSlideIndex = newIndex;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
